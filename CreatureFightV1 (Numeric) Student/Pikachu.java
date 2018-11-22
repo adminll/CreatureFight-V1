@@ -1,4 +1,4 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+    import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
  * Write a description of class Pikachu here.
@@ -8,6 +8,14 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Pikachu extends Creature
 {
+    public Pikachu(World world)
+    {
+        super(650, 2);
+        getImage().scale(150,100);
+        world.addObject(getHealthBar(), 100, 25);
+    }
+    
+    
     /**
      * TODO (22): Create a constructor for Pikachu that has a World parameter called world
      * 
@@ -34,9 +42,13 @@ public class Pikachu extends Creature
          * TODO (46): Create a CreatureWorld variable called playerWorld. Initialize it
          *            to a reference to your CreatureWorld. Use Charmander as a reference if needed
          */
-        
+        CreatureWorld playerWorld = (CreatureWorld)getWorld();
         //TODO (47): If Pikachu's health bar has a current health less than or equal to 0 (you must get the health bar and then get its current value)...
-        
+        if(getHealthBar().getCurrent() <= 0)
+        {
+            getWorld().showText("Pikachu has fainted at", getWorld().getWidth()/2,getWorld().getHeight()/2);
+            Greenfoot.delay(30);
+        }
             //TODO (48): Get the world and use it to show text that says that Pikachu has fainted at an x location of getWorld().getWidth()/2 and a y location of getWorld().getHeight()/2 + 26
             
             //TODO (49): Delay the scenario by 30 act cycles

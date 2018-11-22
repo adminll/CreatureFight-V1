@@ -1,14 +1,13 @@
 /**
  * TODO (50): Fill out the following information...
  * 
- * Name: 
- * Course: 
- * Teacher: 
- * Date Last Modified: 
+ * Name: Kaden
+ * Course: PTEC
+ * Teacher: Mr.Hardman
+ * Date Last Modified: ll/9/2018 (Last modified
  */
 
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-import java.awt.Color;
 import javax.swing.JOptionPane;
 import java.util.List;
 
@@ -21,6 +20,10 @@ import java.util.List;
 public class CreatureWorld extends World
 {
     //TODO (1): Declare two private Creature instance variables to store a player one creature and player two creature
+    private Creature creaturePlayerOne;
+    private Creature creaturePlayerTwo;
+    
+    
     
     /**
      * Default constructor for objects of class CreatureWorld.
@@ -39,10 +42,11 @@ public class CreatureWorld extends World
          * 
          * Hint: each new Creature will require a reference to the CreatureWorld, so use "this" in the parameters 
          */
-        
+        creaturePlayerOne = new Charmander(this);
+        creaturePlayerTwo = new Pikachu(this);
         
         //TODO (32): Add a method call to the prepareCreatures method you created. You should see all your objects in your world. If you don't, try to fix it
-        
+        prepareCreatures();
         
         Greenfoot.start();
     }
@@ -62,10 +66,15 @@ public class CreatureWorld extends World
          *            store all objects, so use a parameter of null. That will get all objects, not just the objects
          *            of one class
          */
-        
+        List allObjects =getObjects(null);
         
         // TODO (34): If playerOneCreature's health bar has a current health less than or equal to 0...
-        
+        if(creaturePlayerOne.getHealthBar().getCurrent() <= 0)
+        {
+            removeObjects(allObjects);
+            showText("Player Two Wins!", getWidth()/2,getHeight()/2);
+            Greenfoot.stop();
+        }
             //TODO (35): Make a call to removeObjects and use the allObjects list as the parameter
             
             //TODO (36): Use the show text method to display that player two wins in the centre of the scenario
@@ -74,12 +83,26 @@ public class CreatureWorld extends World
             
         
         //TODO (38): If playerTwoCreature's health bar has a current health less than or equal to 0...
-        
+        if(creaturePlayerTwo.getHealthBar().getCurrent() <= 0)
+        {
+            removeObjects(allObjects);
+            showText("Player One Wins!",getWidth()/2,getHeight()/2);
+            Greenfoot.stop();
+        }
             //TODO (39): Make a call to removeObjects and use the allObjects list as the parameter
             
             //TODO (40): Use the show text method to display that player one wins in the centre of the scenario
             
-            //TODO (41): Stop the scenario
+            //TODO (41): Stop the scenario  
+    }
+    
+    public void prepareCreatures()
+    {
+        addObject(creaturePlayerOne,creaturePlayerOne.getImage().getWidth()/2,getHeight()/2 - creaturePlayerOne.getImage().getHeight()/2);
+        addObject(new Button(Color.RED,50),getWidth()/2, getHeight()-100);
+        
+        addObject(creaturePlayerTwo, creaturePlayerTwo.getImage().getWidth()/2,creaturePlayerTwo.getImage().getHeight()/2);
+        addObject(new Button(Color.RED,50),getWidth()/2, 100);
     }
     
     /**
@@ -108,13 +131,22 @@ public class CreatureWorld extends World
     /**
      * TODO (2): Declare a public method called getPlayerOne that returns a Creature object and
      *           has no parameters
+     *  
      * 
      * TODO (3): The one thing this method should do is return the playerOneCreature
      */
+    public Creature getPlayerOne()
+    {
+        return creaturePlayerOne;
+    }
     
     /**
      * TODO (4): Declare a public method called getPlayerTwo that returns a Creature object and
      *           has no parameters. You should be available to figure out what this method does
      *           from the previous two TODOs
      */
+    public Creature getPlayerTwo()
+    {
+        return creaturePlayerTwo;
+    }
 }
